@@ -1,0 +1,30 @@
+{% extends 'learning_logs/base.html' %}
+{% block content %}
+    <style type="text/css">
+        p { font-family: Arial; color: black;}
+        #entry {border: 5px dashed; border-style: groove; padding-left: 20px; padding-right: 20px}
+        p>a {font-family: "Comic Sans MS"; color: blue;}
+        li>p { font-family: "Times New Roman"; color: lightslategray; padding-left:10px;}
+        #topicc {font-size: large; font-family: "Arial Black"; color: forestgreen;}
+        b,i {font-size: larger; font-family: Calibri; font-style: italic}
+        hr { padding: -20px;  border: none;  border-top: medium double #333;  color: #333;  text-align: center;}
+        hr:after {  content: "§";  display: inline-block;  position: relative;  top: -0.7em;  font-size: 1.2em;  padding: 0 0.25em;
+            background: transparent;
+}
+    </style>
+<p id="topicc">Topic: {{ topic }}</p>
+<p><i>Entries:<br></i><a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a></p>
+    <hr/>
+    <div id="entry">
+    {% for entry in entries %}
+        <p><b>{{ entry.text| linebreaks }}</b></p>
+        <li><p>{{ entry.date_added|date:'M d, Y H:i'}}</p></li>
+        <p>
+        <a href = "{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a>
+        </p><hr/>
+    {% empty %}
+        <li>There are no entries for this topic yet</li>
+        </div>
+    {% endfor %}
+
+{% endblock content %}
